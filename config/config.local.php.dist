@@ -1,0 +1,28 @@
+<?php
+return [
+    // Target redirect URL if index.php is called directly.
+    'url' => getenv('URL'),
+    // Required database connection properties.
+    'mysql' => [
+        'server' => getenv('MYSQL_SERVER'),
+        'user' => getenv('MYSQL_USER'),
+        'password' => getenv('MYSQL_PASSWORD'),
+        'database' => getenv('MYSQL_DATABASE'),
+    ],
+    // Required mail account settings.
+    'imap' => [
+        'server' => getenv('IMAP_SERVER'),
+        'port' => getenv('IMAP_PORT') ?: 993,
+        'user' => getenv('IMAP_USER'),
+        'password' => getenv('IMAP_PASSWORD'),
+        'mailbox' => getenv('IMAP_MAILBOX') ?: 'INBOX',
+    ],
+    'smtp' => [
+        'server' => getenv('SMTP_SERVER'),
+        'port' => getenv('SMTP_PORT') ?: 465,
+        'user' => getenv('SMTP_USER'),
+        'password' => getenv('SMTP_PASSWORD'),
+    ],
+    // The query to use in MySQL to get a list of mail addresses to send to.
+    'query' => getenv('QUERY') ?: 'SELECT email FROM users;',
+];
