@@ -1,13 +1,18 @@
+#!/usr/bin/env php
 <?php
 
 use App\Application;
 use App\ApplicationProvider;
 use Sx\Container\Injector;
 
-require '../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
+
+if (!$_SERVER['HTTP_HOST']) {
+    $_SERVER['HTTP_HOST'] = 'localhost';
+}
 
 $options = [];
-foreach (glob('../config/*.php') as $file) {
+foreach (glob(__DIR__ . '/../config/*.php') as $file) {
     $options[] = include $file;
 }
 $options = array_merge([], ...$options);
