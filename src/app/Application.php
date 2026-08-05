@@ -2,16 +2,8 @@
 
 namespace App;
 
-use Sx\Data\BackendException;
-use Sx\Data\Storage;
-
 class Application
 {
-    /**
-     * @var Storage
-     */
-    private $storage;
-
     /**
      * @var ImapRepo
      */
@@ -23,29 +15,21 @@ class Application
     private $smtp;
 
     /**
-     * @var string
+     * @var array
      */
-    private $query;
+    private $addresses;
 
-    public function __construct(Storage $storage, ImapRepo $imap, SmtpRepo $smtp, string $query)
+    public function __construct(ImapRepo $imap, SmtpRepo $smtp, array $addresses)
     {
-        $this->storage = $storage;
         $this->imap = $imap;
         $this->smtp = $smtp;
-        $this->query = $query;
+        $this->addresses = $addresses;
     }
 
-    /**
-     * @throws BackendException
-     */
     public function __invoke(): void
     {
-        $addresses = [];
-        foreach ($this->storage->fetch($this->query) as $result) {
-            $addresses[] = current($result);
-        }
         foreach ($this->imap->read() as $mail) {
-            foreach ($addresses as $to) {
+            foreach ($this->addresses as $to) {
                 $this->smtp->send($to, $mail);
             }
             $this->imap->delete($mail['uid']);
