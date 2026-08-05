@@ -34,6 +34,5 @@ class Application
             }
             $this->imap->delete($mail['uid']);
         }
-        echo 'DONE';
     }
 }
