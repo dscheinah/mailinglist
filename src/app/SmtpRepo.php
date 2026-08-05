@@ -39,7 +39,6 @@ class SmtpRepo
         }
         $this->connector->send(
             [
-                'Reply-To' => $mail['from']['email'],
                 'Date' => $mail['date'],
                 'Message-ID' => $mail['id'],
             ]
