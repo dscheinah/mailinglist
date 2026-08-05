@@ -8,3 +8,4 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
  && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 ADD ./config/config.local.php.dist /var/www/html/config/config.local.php
 COPY --from=composer /app/ /var/www/html/
+ADD ./patch/Smtp.php /var/www/html/vendor/eden/mail/src/
